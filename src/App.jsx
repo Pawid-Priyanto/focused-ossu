@@ -19,16 +19,40 @@ const Footer = () => {
   );
 };
 
+// const App = () => {
+//   return (
+//     <div>
+//       <h1>Greetings</h1>
+
+//       <Hello name="sabrang" age={19} />
+//       <Hello name="mowo" age={12 + 9} />
+//       <Hello name="damar" age={17} />
+//       <Hello name="panuluh" age={32} />
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// const App = () => {
+//   const friends = [
+//     { name: "Peter", age: 4 },
+//     { name: "Maya", age: 10 },
+//   ];
+
+//   return (
+//     <div>
+//       <p>{(friends[0].name, friends[0].age)}</p>
+//       <p>{(friends[1].name, friends[1].age)}</p>
+//     </div>
+//   );
+// };
+
 const App = () => {
+  const friends = ["Peter", "Maya"];
+
   return (
     <div>
-      <h1>Greetings</h1>
-
-      <Hello name="sabrang" age={19} />
-      <Hello name="mowo" age={12 + 9} />
-      <Hello name="damar" age={17} />
-      <Hello name="panuluh" age={32} />
-      <Footer />
+      <p>{friends}</p>
     </div>
   );
 };
