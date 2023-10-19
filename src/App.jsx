@@ -1,57 +1,30 @@
-const Headers = (props) => {
-  const { course } = props;
-  return <h1>{course.name}</h1>;
-};
+import React from "react";
 
-const Content = ({ course }) => {
-  return (
-    <div>
-      {course.parts.map((part) => (
-        <Part key={part.id} part={part} />
-      ))}
-    </div>
-  );
-};
-
-const Total = ({ course }) => {
-  const total = course.parts.reduce((total, part) => total + part.exercises, 0);
-  return <p>Number of exercises {total}</p>;
-};
-
-const Part = ({ part }) => {
-  return (
-    <div>
-      {part.name}, {part.exercises}
-    </div>
-  );
-};
-
-const App = () => {
-  const course = {
-    name: "Half Stack application development",
-    parts: [
-      {
-        name: "Fundamentals of React",
-        exercises: 10,
-      },
-      {
-        name: "Using props to pass data",
-        exercises: 7,
-      },
-      {
-        name: "State of a component",
-        exercises: 14,
-      },
-    ],
+const Hello = (props) => {
+  const bornYear = () => {
+    const yearNow = new Date().getFullYear();
+    return yearNow - props.age;
   };
-
   return (
-    <div>
-      <Headers course={course} />
-      <Content course={course} />
-      <Total course={course} />
-    </div>
+    <>
+      <h3>
+        Hello, I am {props.name} {props.age} years old
+      </h3>
+      <h2>I am propbably born on {bornYear()}</h2>
+    </>
   );
 };
+
+function App() {
+  const name = "Peter";
+  const age = 43;
+  return (
+    <div>
+      <h1>Grettings</h1>
+      <Hello name="John" age={30} />
+      {/* <Hello name={name} age={age} /> */}
+    </div>
+  );
+}
 
 export default App;
