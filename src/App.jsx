@@ -1,24 +1,33 @@
 import React, { useState } from "react";
 
 function App() {
-  const [clicks, setClicks] = useState({
-    left: 0,
-    right: 0,
-  });
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+  const [allClick, setAll] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const handleLeft = () => {
-    setClicks({ ...clicks, left: clicks.left + 1 });
+  const handleClickLeft = () => {
+    setAll([...allClick, "left"]);
+    const updatedLeft = left + 1;
+    setLeft(updatedLeft);
+    setTotal(updatedLeft + right);
   };
-  const handleRight = () => {
-    setClicks({ ...clicks, right: clicks.right + 1 });
+
+  const handleClickRight = () => {
+    setAll([...allClick, "right"]);
+    const updatedRight = right + 1;
+    setRight(updatedRight);
+    setTotal(updatedRight + left);
   };
 
   return (
     <div>
-      {clicks.left}
-      <button onClick={handleLeft}>left</button>
-      <button onClick={handleRight}>right</button>
-      {clicks.right}
+      {left}
+      <button onClick={handleClickLeft}>left</button>
+      <button onClick={handleClickRight}>right</button>
+      {right}
+      <p>{allClick.join(" ")}</p>
+      <p>total is {total}</p>
     </div>
   );
 }
