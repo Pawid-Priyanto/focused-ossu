@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Statistic = ({ total, average, positive, netral, good, bad }) => {
   return (
-    <div>
+    <>
       <h1>Statistic</h1>
       <div style={{ display: "flex", gap: 4 }}>
         <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
@@ -25,7 +25,7 @@ const Statistic = ({ total, average, positive, netral, good, bad }) => {
           Positive: {positive} %
         </p>
       </div>
-    </div>
+    </>
   );
 };
 function App() {
@@ -76,15 +76,18 @@ function App() {
           bad
         </button>
       </div>
-
-      <Statistic
-        good={good}
-        netral={netral}
-        bad={bad}
-        total={total}
-        average={average}
-        positive={positive}
-      />
+      {good === 0 && netral === 0 && bad === 0 ? (
+        <h1>No feedback given</h1>
+      ) : (
+        <Statistic
+          good={good}
+          netral={netral}
+          bad={bad}
+          total={total}
+          average={average}
+          positive={positive}
+        />
+      )}
     </div>
   );
 }
