@@ -1,29 +1,36 @@
 import React, { useState } from "react";
 
+const Button = ({ onClick, text }) => {
+  return (
+    <button
+      onClick={onClick}
+      style={{ borderRadius: 5, width: 100, height: 50 }}
+    >
+      {text}
+    </button>
+  );
+};
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+      {text} : {value}
+    </p>
+  );
+};
+
 const Statistic = ({ total, average, positive, netral, good, bad }) => {
   return (
     <>
       <h1>Statistic</h1>
       <div style={{ display: "flex", gap: 4 }}>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Good: {good}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Netral: {netral}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Bad: {bad}
-        </p>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={netral} />
+        <StatisticLine text="bad" value={bad} />
 
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          All: {total}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Average: {average}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Positive: {positive} %
-        </p>
+        <StatisticLine text="all" value={total} />
+        <StatisticLine text="average" value={average} />
+        <StatisticLine text="positive" value={positive} />
       </div>
     </>
   );
@@ -57,24 +64,9 @@ function App() {
       <h1>Give Us Feedback</h1>
 
       <div style={{ display: "flex", gap: 4 }}>
-        <button
-          onClick={() => handleVote("good")}
-          style={{ borderRadius: 5, width: 100, height: 50 }}
-        >
-          good
-        </button>
-        <button
-          onClick={() => handleVote("neutral")}
-          style={{ borderRadius: 5, width: 100, height: 50 }}
-        >
-          neutral
-        </button>
-        <button
-          onClick={() => handleVote("bad")}
-          style={{ borderRadius: 5, width: 100, height: 50 }}
-        >
-          bad
-        </button>
+        <Button onClick={() => handleVote("good")} text="good" />
+        <Button onClick={() => handleVote("netral")} text="netral" />
+        <Button onClick={() => handleVote("bad")} text="bad" />
       </div>
       {good === 0 && netral === 0 && bad === 0 ? (
         <h1>No feedback given</h1>
