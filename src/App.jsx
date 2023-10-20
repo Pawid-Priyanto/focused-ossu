@@ -8,6 +8,7 @@ const History = ({ allClick }) => {
 };
 
 const Button = ({ handleClick, text }) => {
+  console.log("props text is here", text);
   return <button onClick={handleClick}>{text}</button>;
 };
 
@@ -21,14 +22,14 @@ function App() {
     setAll([...allClick, "left"]);
     const updatedLeft = left + 1;
     setLeft(updatedLeft);
-    setTotal(updatedLeft + right);
+    // setTotal(updatedLeft + right);
   };
 
   const handleClickRight = () => {
     setAll([...allClick, "right"]);
     const updatedRight = right + 1;
     setRight(updatedRight);
-    setTotal(updatedRight + left);
+    // setTotal(updatedRight + left);
   };
 
   return (
