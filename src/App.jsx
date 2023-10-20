@@ -1,46 +1,34 @@
 import React, { useState } from "react";
 
-const History = ({ allClick }) => {
-  if (allClick.length === 0) {
-    return <div>this app is used by pressing the buttons </div>;
+const App = () => {
+  // these are ok
+  const [age, setAge] = useState(0);
+  const [name, setName] = useState("Juha Tauriainen");
+
+  if (age > 10) {
+    // this does not work!
+    const [foobar, setFoobar] = useState(null);
   }
-  return <div>button presed history: {allClick.join(" ")}</div>;
-};
 
-const Button = ({ handleClick, text }) => {
-  console.log("props text is here", text);
-  return <button onClick={handleClick}>{text}</button>;
-};
+  for (let i = 0; i < age; i++) {
+    // also this is not good
+    const [rightWay, setRightWay] = useState(false);
+  }
 
-function App() {
-  const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(0);
-  const [allClick, setAll] = useState([]);
-  const [total, setTotal] = useState(0);
-
-  const handleClickLeft = () => {
-    setAll([...allClick, "left"]);
-    const updatedLeft = left + 1;
-    setLeft(updatedLeft);
-    // setTotal(updatedLeft + right);
-  };
-
-  const handleClickRight = () => {
-    setAll([...allClick, "right"]);
-    const updatedRight = right + 1;
-    setRight(updatedRight);
-    // setTotal(updatedRight + left);
+  const notGood = () => {
+    // and this is also illegal
+    const [x, setX] = useState(-1000);
   };
 
   return (
+    //...
     <div>
-      {left}
-      <Button handleClick={handleClickLeft} text="left" />
-      <Button handleClick={handleClickRight} text="right" />
-      {right}
-      <History allClick={allClick} />
+      Rules Of Hooks
+      <p>
+        my name {name}, i am {age} years old
+      </p>
     </div>
   );
-}
+};
 
 export default App;
