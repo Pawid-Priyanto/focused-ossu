@@ -1,11 +1,37 @@
 import React, { useState } from "react";
 
+const Statistic = ({ total, average, positive, netral, good, bad }) => {
+  return (
+    <div>
+      <h1>Statistic</h1>
+      <div style={{ display: "flex", gap: 4 }}>
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          Good: {good}
+        </p>
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          Netral: {netral}
+        </p>
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          Bad: {bad}
+        </p>
+
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          All: {total}
+        </p>
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          Average: {average}
+        </p>
+        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
+          Positive: {positive} %
+        </p>
+      </div>
+    </div>
+  );
+};
 function App() {
   const [good, setGood] = useState(0);
   const [netral, setNetral] = useState(0);
   const [bad, setBad] = useState(0);
-  // const [average, setAverage] = useState(0);
-  // const [positive, setPositive] = useState(0);
 
   const handleVote = (vote) => {
     if (vote === "good") {
@@ -51,28 +77,14 @@ function App() {
         </button>
       </div>
 
-      <h1>Statistic</h1>
-      <div style={{ display: "flex", gap: 4 }}>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Good: {good}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Netral: {netral}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Bad: {bad}
-        </p>
-
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          All: {total}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Average: {average}
-        </p>
-        <p style={{ padding: 16, border: "1px solid black", borderRadius: 5 }}>
-          Positive: {positive} %
-        </p>
-      </div>
+      <Statistic
+        good={good}
+        netral={netral}
+        bad={bad}
+        total={total}
+        average={average}
+        positive={positive}
+      />
     </div>
   );
 }
