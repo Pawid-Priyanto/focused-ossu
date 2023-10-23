@@ -1,56 +1,45 @@
-import React from "react";
-import Course from "./components/molecules/course";
-const App = () => {
-  const courses = [
-    {
-      name: "Half Stack application development",
-      id: 1,
-      parts: [
-        {
-          name: "Fundamentals of React",
-          exercises: 10,
-          id: 1,
-        },
-        {
-          name: "Using props to pass data",
-          exercises: 7,
-          id: 2,
-        },
-        {
-          name: "State of a component",
-          exercises: 14,
-          id: 3,
-        },
-        {
-          name: "Redux",
-          exercises: 11,
-          id: 4,
-        },
-      ],
-    },
-    {
-      name: "Node.js",
-      id: 2,
-      parts: [
-        {
-          name: "Routing",
-          exercises: 3,
-          id: 1,
-        },
-        {
-          name: "Middlewares",
-          exercises: 7,
-          id: 2,
-        },
-      ],
-    },
-  ];
+import React, { useState } from "react";
+import Note from "./components/Note";
+const App = (props) => {
+  const [newNote, setNewNote] = useState("");
+  const [note, setNote] = useState(props.notes);
+  const [showAll, setShowAll] = useState(true);
 
+  const notesToShow = showAll ? note : note.filter((note) => note.important);
+  const addNotes = (e) => {
+    e.preventDefault();
+
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+      id: note.length + 1,
+    };
+
+    setNote(note.concat(noteObject));
+    setNewNote("");
+  };
+
+  const handleChangeNote = (e) => {
+    console.log(e.target.value);
+    setNewNote(e.target.value);
+  };
   return (
     <div>
-      {courses.map((course) => (
-        <Course key={course.id} course={course} />
-      ))}
+      <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? "important" : "all"}
+        </button>
+      </div>
+      <ul>
+        {notesToShow.map((note) => (
+          <Note key={note.id} note={note} />
+        ))}
+      </ul>
+      <form onSubmit={addNotes}>
+        <input value={newNote} onChange={handleChangeNote} />
+        <button type="submit">save</button>
+      </form>
     </div>
   );
 };
