@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -7,6 +8,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+
+  const [personsServer, setPersonsServer] = useState([]);
 
   const handleNameChange = (e) => setNewName(e.target.value);
   const handleNumberChange = (e) => setNewNumber(e.target.value);
@@ -29,6 +32,13 @@ const App = () => {
   const filteredPersons = persons.filter((person) =>
     person.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
   );
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      console.log(response.data);
+      setPersonsServer(response.data);
+    });
+  }, []);
   return (
     <div>
       <h2>Phonebook</h2>
@@ -54,7 +64,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {filteredPersons.map((person) => (
+        {personsServer.map((person) => (
           <li key={person.name}>
             {person.name} {person.number}
           </li>
