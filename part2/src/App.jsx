@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Note from "./components/Note";
+import Notification from "./components/Notification";
 import noteService from "./services/apiUrl";
+import Footer from "./components/Footer";
 const App = (props) => {
   const [newNote, setNewNote] = useState("");
   const [note, setNote] = useState(props.notes);
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const notesToShow = showAll ? note : note.filter((note) => note.important);
   const addNotes = (e) => {
@@ -22,6 +25,26 @@ const App = (props) => {
     });
   };
 
+  // const toggleImportanceOf = (id) => {
+  //   const noted = note.find((n) => n.id === id);
+  //   const changedNote = { ...noted, important: !noted.important };
+
+  //   noteService
+  //     .update(id, changedNote)
+  //     .then((returnedNote) => {
+  //       setNote(note.map((n) => (n.id !== id ? n : returnedNote)));
+  //     })
+  //     .catch((error) => {
+  //       setErrorMessage(
+  //         `Note '${note.content}' was already removed from server`
+  //       );
+  //       setTimeout(() => {
+  //         setErrorMessage(null);
+  //       }, 5000);
+  //       setNote(note.filter((n) => n.id !== id));
+  //     });
+  // };
+
   const toggleImportanceOf = (id) => {
     const noted = note.find((n) => n.id === id);
     const changedNote = { ...noted, important: !noted.important };
@@ -32,7 +55,11 @@ const App = (props) => {
         setNote(note.map((n) => (n.id !== id ? n : returnedNote)));
       })
       .catch((error) => {
-        alert(`the note ${note.content} was already delted from server`);
+        setErrorMessage(`Note ${note.content} was already from server`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        // alert(`the note ${note.content} was already deleted from server`);
         setNote(note.filter((n) => n.id !== id));
       });
   };
@@ -50,6 +77,7 @@ const App = (props) => {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all"}
@@ -68,6 +96,7 @@ const App = (props) => {
         <input value={newNote} onChange={handleChangeNote} />
         <button type="submit">save</button>
       </form>
+      <Footer />
     </div>
   );
 };
