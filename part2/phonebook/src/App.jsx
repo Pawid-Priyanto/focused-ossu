@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import personService from "./services";
+import Notification from "./components/Notification";
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const [personsServer, setPersonsServer] = useState([]);
 
@@ -43,6 +46,18 @@ const App = () => {
             );
             setNewName(""); // Clear the input field
             setNewNumber(""); // Clear the input field
+            setStatus("success");
+            setMessage(`${newPerson.name} has been updated`);
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+          })
+          .catch((err) => {
+            setStatus("error");
+            setMessage(`${newPerson.name} has been deleted`);
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
           });
       }
     } else {
@@ -50,6 +65,11 @@ const App = () => {
         setPersonsServer(personsServer.concat(response.data));
         setNewName(""); // Clear the input field
         setNewNumber(""); // Clear the input field
+        setStatus("success");
+        setMessage(`${newPerson.name} has been added`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
       });
     }
   };
@@ -60,9 +80,15 @@ const App = () => {
 
   const onDelete = (id, name) => {
     if (window.confirm(`Do you really want to delete ${name}?`)) {
-      personService.deleteNote(id).then(() => {
-        setPersonsServer(personsServer.filter((person) => person.id !== id));
-      });
+      personService
+        .deleteNote(id)
+        .then(() => {
+          setPersonsServer(personsServer.filter((person) => person.id !== id));
+        })
+        .catch((err) => {
+          setStatus("error");
+          setMessage(`information of ${name} has already removed`);
+        });
     }
   };
 
@@ -76,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} status={status} />
       <div>
         filter show with{" "}
         <input
