@@ -27,9 +27,9 @@ const App = () => {
   const onSearch = (event) => {
     event.preventDefault();
     setCurrency(value);
-    // axios.get(`https://open.er.api.com/v6/latest/${value}`).then((response) => {
-    //   setRates(response.data.rates);
-    // });
+    axios.get(`https://open.er.api.com/v6/latest/${value}`).then((response) => {
+      setRates(response.data.rates);
+    });
   };
 
   return (
